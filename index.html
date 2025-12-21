@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anas Ouargui | Cybersecurity & Programmer</title>
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+<body>
+<!-- Header -->
+<header>
+  <nav>
+    <div class="logo">
+      <img src="assets/images/L.png" alt="White Hunter Logo">
+      <div class="logo-text">
+        <span class="logo-name">ANAS</span>
+        <span class="logo-alias">"WHITE HUNTER"</span>
+      </div>
+    </div>
+    
+    <ul class="nav-links">
+      <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+      <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
+      <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+      <li><a href="#certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
+      <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li>
+<button class="matrix-toggle">
+    <i class="fas fa-bolt"></i> Matrix
+</button>
+      </li>
+    </ul>
+    
+    <div class="hamburger" id="hamburger">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+</header>
+
+<!-- Matrix Canvas -->
+<canvas id="matrixCanvas"></canvas>
+
+
+<!-- TERMINAL SECTION -->
+<section class="terminal-hero">
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+    
+    <div class="terminal-body">
+      <!-- Output Area -->
+      <div class="terminal-output" id="terminal-output">
+        <div class="command-line">
+          <span class="prompt">root@whitehunter:~$</span>
+          <span id="intro-text"></span><span class="cursor">█</span>
+        </div>
+      </div>
+      
+      <!-- Input Area - SIMPLE CLEAN VERSION -->
+      <div class="terminal-input">
+        <span class="prompt">guest@portfolio:~$</span>
+        <input type="text" id="terminal-cmd" 
+               placeholder="help"
+               autocomplete="off"
+               spellcheck="false"
+               style="flex: 1; background: none; border: none; color: white; font-family: 'Fira Code'; font-size: 16px; outline: none;">
+        <span id="cursor" style="color: #27c93f;">█</span>
+      </div>
+    </div>
+  </div>
+  
+  <p class="terminal-sub">
+    Securing the Digital World, One Line of Code at a Time
+  </p>
+  
+  <div class="terminal-buttons">
+    <a href="#projects" class="btn-primary">
+      <i class="fas fa-code"></i> View My Work
+    </a>
+    <a href="assets/cv.pdf" download class="btn-secondary">
+      <i class="fas fa-download"></i> Download CV
+    </a>
+  </div>
+</section>
+
+<!-- SIMPLE SCRIPT THAT WILL DEFINITELY WORK -->
+<script>
+// Wait for page to load
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Page loaded - setting up terminal');
+    
+    // 1. Typing animation
+    startTyping();
+    
+    // 2. Setup terminal
+    setupSimpleTerminal();
+    
+    // 3. Show welcome after delay
+    setTimeout(function() {
+        const output = document.getElementById('terminal-output');
+        if (output) {
+            const welcome = document.createElement('div');
+            welcome.innerHTML = '<div style="color: #aaa; margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">Type <span style="color: #27c93f; font-weight: bold;">help</span> and press Enter to see commands</div>';
+            output.appendChild(welcome);
+            output.scrollTop = output.scrollHeight;
+        }
+    }, 1000);
+});
+
+// Typing effect
+function startTyping() {
+    const textEl = document.getElementById('intro-text');
+    if (!textEl) return;
+    
+    const words = ["Anas", "White Hunter"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    
+    function type() {
+        const current = words[wordIndex];
+        
+        if (!deleting) {
+            textEl.textContent = current.substring(0, charIndex + 1);
+            charIndex++;
+            if (charIndex === current.length) {
+                deleting = true;
+                setTimeout(type, 1500);
+                return;
+            }
+        } else {
+            textEl.textContent = current.substring(0, charIndex - 1);
+            charIndex--;
+            if (charIndex === 0) {
+                deleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+            }
+        }
+        
+        setTimeout(type, deleting ? 60 : 120);
+    }
+    
+    type();
+}
+
+// SIMPLE TERMINAL THAT WILL WORK
+function setupSimpleTerminal() {
+    const input = document.getElementById('terminal-cmd');
+    if (!input) {
+        console.error('Input field not found!');
+        return;
+    }
+    
+    console.log('Input field found:', input);
+    
+    // Focus input
+    input.focus();
+    
+    // Add Enter key listener
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const cmd = this.value.trim();
+            console.log('Command entered:', cmd);
+            
+            if (cmd) {
+                // Show command
+                addCommandLine(cmd);
+                
+                // Process command
+                processSimpleCommand(cmd);
+                
+                // Clear input
+                this.value = '';
+            }
+        }
+    });
+}
+
+// Add command line to output
+function addCommandLine(cmd) {
+    const output = document.getElementById('terminal-output');
+    if (!output) return;
+    
+    const line = document.createElement('div');
+    line.style.color = 'white';
+    line.style.fontFamily = "'Fira Code', monospace";
+    line.style.margin = '5px 0';
+    line.innerHTML = `<span style="color: #27c93f;">guest@portfolio:~$</span> ${cmd}`;
+    output.appendChild(line);
+    
+    // Scroll to bottom
+    output.scrollTop = output.scrollHeight;
+}
+
+// Add output to terminal
+function addOutput(text, isError = false) {
+    const output = document.getElementById('terminal-output');
+    if (!output) return;
+    
+    const div = document.createElement('div');
+    div.style.color = isError ? '#ff4444' : '#ccc';
+    div.style.fontFamily = "'Poppins', sans-serif";
+    div.style.margin = '10px 0';
+    div.style.padding = '10px 15px';
+    div.style.background = 'rgba(0,0,0,0.3)';
+    div.style.borderLeft = '3px solid ' + (isError ? '#ff4444' : '#27c93f');
+    div.style.borderRadius = '0 5px 5px 0';
+    div.innerHTML = text;
+    output.appendChild(div);
+    
+    // Scroll to bottom
+    output.scrollTop = output.scrollHeight;
+}
+
+// Process commands
+function processSimpleCommand(cmd) {
+    const lowerCmd = cmd.toLowerCase();
+    
+    // Define commands
+    const commands = {
+        'help': `
+            <strong>Available Commands:</strong><br><br>
+            <span style="color: #27c93f">help</span> - Show this help<br>
+            <span style="color: #27c93f">whoami</span> - About me<br>
+            <span style="color: #27c93f">about</span> - Go to About section<br>
+            <span style="color: #27c93f">skills</span> - Go to Skills<br>
+            <span style="color: #27c93f">projects</span> - Go to Projects<br>
+            <span style="color: #27c93f">certs</span> - Go to Certifications<br>
+            <span style="color: #27c93f">contact</span> - Go to Contact<br>
+            <span style="color: #27c93f">clear</span> - Clear terminal<br>
+            <span style="color: #27c93f">hack</span> - Easter egg
+        `,
+        
+        'whoami': {
+            text: 'Anas "White Hunter" - Cybersecurity Expert<br><br><em>Taking you to About section...</em>',
+            scroll: 'about'
+        },
+        
+        'about': {
+            text: '<em>Opening About section...</em>',
+            scroll: 'about'
+        },
+        
+        'skills': {
+            text: '<em>Opening Skills section...</em>',
+            scroll: 'skills'
+        },
+        
+        'projects': {
+            text: '<em>Opening Projects section...</em>',
+            scroll: 'projects'
+        },
+        
+        'certs': {
+            text: '<em>Opening Certifications...</em>',
+            scroll: 'certifications'
+        },
+        
+        'contact': {
+            text: '<em>Opening Contact section...</em>',
+            scroll: 'contact'
+        },
+        
+        'clear': 'clear',
+        
+        'hack': `
+            <pre style="color: #27c93f; font-size: 12px; margin: 0;">
+╔══════════════════════════╗
+║   SYSTEM PENETRATED!    ║
+║   Access: Granted       ║
+║   User: White Hunter    ║
+╚══════════════════════════╝
+            </pre>
+        `
+    };
+    
+    // Handle clear command
+    if (lowerCmd === 'clear') {
+        const output = document.getElementById('terminal-output');
+        if (output) {
+            output.innerHTML = '<div class="command-line"><span class="prompt">root@whitehunter:~$</span><span id="intro-text"></span><span class="cursor">█</span></div>';
+            startTyping();
+        }
+        return;
+    }
+    
+    // Handle known commands
+    if (commands[lowerCmd]) {
+        if (lowerCmd === 'help') {
+            addOutput(commands[lowerCmd]);
+        } else if (lowerCmd === 'hack') {
+            addOutput(commands[lowerCmd]);
+        } else {
+            // For scroll commands
+            const cmdData = commands[lowerCmd];
+            addOutput(cmdData.text);
+            
+            // Scroll to section
+            setTimeout(() => {
+                const section = document.getElementById(cmdData.scroll);
+                if (section) {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 800);
+        }
+    } else {
+        // Command not found
+        addOutput(`<span style="color: #ff4444">Command not found:</span> "${cmd}"<br>Type <span style="color: #27c93f">help</span> for commands.`, true);
+    }
+}
+
+// Make functions available globally for testing
+window.testTerminal = function() {
+    console.log('Testing terminal...');
+    const input = document.getElementById('terminal-cmd');
+    if (input) {
+        input.value = 'help';
+        input.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
+    }
+};
+</script>
+
+ <!-- About Section -->
+<section id="about">
+  <h2>About Me</h2>
+  <div class="about-container">
+    <img src="assets/Images/profile.jpeg" alt="Your Name" class="profile-img">
+    <div class="about-text">
+      <p>I'm a cybersecurity expert and programmer with a passion for building secure systems and solving complex problems. With over 5 years of experience, I specialize in penetration testing, ethical hacking, and secure software development.</p>
+      <div class="skills-container">
+        <div class="skills-track">
+          <div class="skill-btn">
+            <i class="fab fa-python"></i>
+            <span>Python</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fab fa-js"></i>
+            <span>JavaScript</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-shield-alt"></i>
+            <span>Penetration Testing</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-user-secret"></i>
+            <span>Ethical Hacking</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-cloud"></i>
+            <span>Cloud Security</span>
+          </div>
+          <!-- Repeat the skills for seamless sliding -->
+          <div class="skill-btn">
+            <i class="fab fa-python"></i>
+            <span>Python</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fab fa-js"></i>
+            <span>JavaScript</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-shield-alt"></i>
+            <span>Penetration Testing</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-user-secret"></i>
+            <span>Ethical Hacking</span>
+          </div>
+          <div class="skill-btn">
+            <i class="fas fa-cloud"></i>
+            <span>Cloud Security</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ <!-- Add this after the About section -->
+<section id="skills" class="section">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+        <div class="skill-category">
+            <h3><i class="fas fa-code"></i> Programming</h3>
+            <p>Python, JavaScript, C++, Bash</p>
+        </div>
+        <div class="skill-category">
+            <h3><i class="fas fa-shield-alt"></i> Security</h3>
+            <p>Penetration Testing, Ethical Hacking, Network Security</p>
+        </div>
+        <div class="skill-category">
+            <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
+            <p>AWS, Docker, Kubernetes, CI/CD</p>
+        </div>
+    </div>
+</section>
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <img src="assets/Images/project1.png" alt="Project 1">
+        <h3>Secure Chat Application</h3>
+        <p>A fully encrypted chat app built with end-to-end encryption.</p>
+        <a href="https://github.com/WhitexHunter047/MWG-Master-wordlist-generator" class="project-link">View on GitHub</a>
+      </div>
+      <div class="project-card">
+        <img src="assets/Images/project2.png" alt="Project 2">
+        <h3>Network Vulnerability Scanner</h3>
+        <p>A tool to detect vulnerabilities in network systems.</p>
+        <a href="#" class="project-link">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+<!-- Certifications Section -->
+<section id="certifications">
+  <h2>Certifications</h2>
+  <div class="certifications-grid">
+    <!-- CEH -->
+    <div class="certification-card">
+      <i class="fas fa-user-secret"></i>
+      <h3>Certified Ethical Hacker (CEH)</h3>
+      <p>Issued by EC-Council</p>
+    </div>
+    <!-- Security+ -->
+    <div class="certification-card">
+      <i class="fas fa-shield-alt"></i>
+      <h3>CompTIA Security+</h3>
+      <p>Issued by CompTIA</p>
+    </div>
+    <!-- OSCP Knowledge -->
+    <div class="certification-card">
+      <i class="fas fa-bug"></i>
+      <h3>OSCP Knowledge</h3>
+      <p>Offensive Security</p>
+    </div>
+    <!-- eJPTv1 -->
+    <div class="certification-card">
+      <i class="fas fa-search"></i>
+      <h3>eJPTv1</h3>
+      <p>Issued by eLearnSecurity</p>
+    </div>
+    <!-- CySA+ -->
+    <div class="certification-card">
+      <i class="fas fa-chart-line"></i>
+      <h3>CySA+</h3>
+      <p>Issued by CompTIA</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Anas Ouargui. All rights reserved.</p>
+    <div class="social-links">
+      <a href="mailto:ouarguianas@example.com" target="_blank" title="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="https://github.com/WhitexHunter47" target="_blank" title="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://linkedin.com/in/yourusername" target="_blank" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://twitter.com/yourusername" target="_blank" title="Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </div>
+  </footer>
+<script src="C:\Users\chafik\Desktop\Folders\SITES\portfolio\assets\js\scripts.js"></script>
+</body>
+</html>
