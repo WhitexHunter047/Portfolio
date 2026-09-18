@@ -1,489 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anas Ouargui | Cybersecurity & Programmer</title>
-  
-  <!-- CSS Files -->
-  <link rel="stylesheet" href="styles.css">
-  
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Particles.js -->
-  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Hunter // Offensive Security</title>
+<meta name="description" content="Anas Ouargui — White Hunter. Offensive security learner focused on Active Directory, privilege escalation, pivoting and web security.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body>
-<!-- Header -->
-<header>
-  <nav>
-    <div class="logo">
-      <img src="assets/Images/L.png" alt="White Hunter Logo">
-      <div class="logo-text">
-        <span class="logo-name">ANAS</span>
-        <span class="logo-alias">"WHITE HUNTER"</span>
-      </div>
+
+<!-- ============ BOOT SPLASH ============ -->
+<div id="boot" class="boot" aria-hidden="true">
+  <div class="boot-inner">
+    <pre class="boot-logo">  ██╗    ██╗██╗  ██╗
+  ██║    ██║██║  ██║
+  ██║ █╗ ██║███████║
+  ██║███╗██║██╔══██║
+  ╚███╔███╔╝██║  ██║
+   ╚══╝╚══╝ ╚═╝  ╚═╝</pre>
+    <div class="boot-lines">
+      <p><span>›</span> initializing secure shell<span class="dots">...</span></p>
+      <p><span>›</span> loading offensive modules<span class="dots">...</span></p>
+      <p><span>›</span> establishing tunnel<span class="dots">...</span></p>
+      <p><span>›</span> handshake complete</p>
     </div>
-    
-    <ul class="nav-links">
-      <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
-      <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
-      <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
-      <li><a href="#certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
-      <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
-      <li>
-<button class="matrix-toggle">
-    <i class="fas fa-bolt"></i> Matrix
+    <div class="boot-bar"><span></span></div>
+    <div class="boot-status">ACCESS GRANTED // WELCOME, HUNTER</div>
+  </div>
+</div>
+
+<canvas id="matrixCanvas" aria-hidden="true"></canvas><div class="matrix-shade"></div><div class="vignette"></div><canvas id="gridCanvas" class="grid-bg" aria-hidden="true"></canvas><div class="scroll-progress"></div>
+
+<header><nav>
+<a class="logo" href="#home" aria-label="White Hunter home"><span class="logo-mark">WH</span><span class="logo-word"><b>WHITE HUNTER</b><small>OFFENSIVE SECURITY</small></span></a>
+<div class="nav-links"><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#certifications">Certs</a><a href="#contact">Contact</a></div>
+<div class="nav-actions">
+<button class="sound-toggle" type="button" aria-label="Toggle ambient sound" title="Ambient sound">
+  <i class="fa-solid fa-volume-xmark"></i>
 </button>
-      </li>
-    </ul>
-    
-    <div class="hamburger" id="hamburger">
-      <i class="fas fa-bars"></i>
-    </div>
-  </nav>
-</header>
+<button class="matrix-toggle" type="button"><i class="fa-solid fa-bolt"></i><span>Matrix</span></button>
+<button class="hamburger" id="hamburger" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
+</div>
+</nav></header>
 
-<!-- Matrix Canvas -->
-<canvas id="matrixCanvas"></canvas>
-
-
-<!-- TERMINAL SECTION -->
-<section class="terminal-hero">
-  <div class="terminal">
-    <div class="terminal-header">
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
-    </div>
-    
-    <div class="terminal-body">
-      <!-- Output Area -->
-      <div class="terminal-output" id="terminal-output">
-        <div class="command-line">
-          <span class="prompt">root@whitehunter:~$</span>
-          <span id="intro-text"></span><span class="cursor">█</span>
-        </div>
-      </div>
-      
-      <!-- Input Area - SIMPLE CLEAN VERSION -->
-      <div class="terminal-input">
-        <span class="prompt">guest@portfolio:~$</span>
-        <input type="text" id="terminal-cmd" 
-               placeholder="help"
-               autocomplete="off"
-               spellcheck="false"
-               style="flex: 1; background: none; border: none; color: white; font-family: 'Fira Code'; font-size: 16px; outline: none;">
-        <span id="cursor" style="color: #27c93f;">█</span>
-      </div>
-    </div>
-  </div>
-  
-  <p class="terminal-sub">
-    Securing the Digital World, One Line of Code at a Time
-  </p>
-  
-  <div class="terminal-buttons">
-    <a href="#projects" class="btn-primary">
-      <i class="fas fa-code"></i> View My Work
-    </a>
-    <a href="assets/cv.pdf" download class="btn-secondary">
-      <i class="fas fa-download"></i> Download CV
-    </a>
-  </div>
+<main id="home">
+<section class="hero section-reveal">
+<div class="hero-left"><div class="status"><span></span> BUILDING IN PUBLIC // OFFENSIVE SECURITY</div><p class="kicker">CYBERSECURITY / PENETRATION TESTING</p>
+<h1 class="glitch" data-text="Curious enough to break it.">Curious enough<br>to <span>break it.</span></h1>
+<h1 class="glitch" data-text="Disciplined enough to understand it.">Disciplined enough<br>to understand it.</h1>
+<div class="hero-actions">
+<a class="btn primary" href="#projects">Explore my work <i class="fa-solid fa-arrow-right"></i></a>
+<a class="btn secondary" href="#about">About me</a>
+<a class="btn secondary cv-btn" href="assets/cv.pdf" download id="cvBtn" data-cv="assets/cv.pdf">
+  <i class="fa-solid fa-download"></i> <span>Download CV</span>
+  <span class="cv-progress"><i></i></span>
+</a>
+<a class="btn hire-btn" href="#contact"><i class="fa-solid fa-briefcase"></i> <span>Hire Me</span></a>
+</div>
+<div class="hero-meta"><span><b>FOCUS</b> Pentesting / AD / PrivEsc</span><span><b>STATUS</b> <i class="live-dot"></i> Learning & building</span></div></div>
+<div class="hero-visual"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="crosshair"><i></i><i></i><i></i><i></i></div><div class="hunter-card"><div class="card-top"><span>WHITE_HUNTER // PROFILE</span><span>01</span></div><div class="avatar-wrap"><img src="assets/Images/profile.jpeg" alt="White Hunter profile"><div class="scan"></div></div><div class="card-info"><strong>WHITE HUNTER</strong><span>OFFENSIVE SECURITY</span></div><div class="signal"><span>RECON</span><i><b></b></i><em>ACTIVE</em></div></div></div>
 </section>
 
-<!-- SIMPLE SCRIPT THAT WILL DEFINITELY WORK -->
-<script>
-// Wait for page to load
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page loaded - setting up terminal');
-    
-    // 1. Typing animation
-    startTyping();
-    
-    // 2. Setup terminal
-    setupSimpleTerminal();
-    
-    // 3. Show welcome after delay
-    setTimeout(function() {
-        const output = document.getElementById('terminal-output');
-        if (output) {
-            const welcome = document.createElement('div');
-            welcome.innerHTML = '<div style="color: #aaa; margin: 10px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 5px;">Type <span style="color: #27c93f; font-weight: bold;">help</span> and press Enter to see commands</div>';
-            output.appendChild(welcome);
-            output.scrollTop = output.scrollHeight;
-        }
-    }, 1000);
-});
+<section id="about" class="section about section-reveal"><div class="section-label">01 / ABOUT ME</div><div class="about-grid"><div><h2>Not just breaking things.<br><span>Understanding them.</span></h2><div class="about-line"></div><p class="about-signature">WHITE HUNTER // ANAS OUARGUI</p></div><div class="about-text"><p class="lead">I'm Anas — <b>White Hunter</b>, a cybersecurity learner focused on offensive security and the process behind a successful attack: enumerate, understand, exploit, escalate, pivot, and document.</p><p>I learn best by getting my hands dirty. Most of my progress comes from Hack The Box, TryHackMe, pwn.college, CTFs and personal labs where I can turn a concept into an actual attack path instead of memorising a tool or a command.</p><p>My strongest areas are <b>Active Directory, Windows/Linux privilege escalation, pivoting and tunneling</b>. I'm also building deeper skill in web security, networking and Python so I can become more complete as a penetration tester rather than being locked into one part of the chain.</p><p>I'm currently working toward <b>HTB CPTS</b>. Long term, I'm aiming to keep pushing into deeper offensive-security work and eventually take on certifications such as <b>OSCP</b> when my practical foundation is ready.</p><div class="platform-strip"><div class="platform-heading"><span>WHERE I PRACTICE</span><small>LABS / CTF / TRAINING</small></div><div class="platform-logos">
+<a href="https://www.hackthebox.com/" target="_blank" rel="noopener" class="platform-mini"><img src="https://cdn.simpleicons.org/hackthebox/b8ff5c" alt="Hack The Box logo"><span class="logo-fallback">HTB</span><b>Hack The Box</b></a>
+<a href="https://tryhackme.com/p/WhitexHunter" target="_blank" rel="noopener" class="platform-mini"><img src="https://cdn.simpleicons.org/tryhackme/b8ff5c" alt="TryHackMe logo"><span class="logo-fallback">THM</span><b>TryHackMe</b></a>
+<a href="https://pwn.college/" target="_blank" rel="noopener" class="platform-mini"><img src="https://cdn.simpleicons.org/pwn.college/b8ff5c" alt="pwn.college logo"><span class="logo-fallback">PWN</span><b>pwn.college</b></a>
+</div></div><div class="quick-facts"><span><b>01</b> Lab driven</span><span><b>02</b> AD / PrivEsc focused</span><span><b>03</b> Build, break, understand</span></div></div></div></section>
 
-// Typing effect
-function startTyping() {
-    const textEl = document.getElementById('intro-text');
-    if (!textEl) return;
-    
-    const words = ["Anas", "White Hunter"];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    
-    function type() {
-        const current = words[wordIndex];
-        
-        if (!deleting) {
-            textEl.textContent = current.substring(0, charIndex + 1);
-            charIndex++;
-            if (charIndex === current.length) {
-                deleting = true;
-                setTimeout(type, 1500);
-                return;
-            }
-        } else {
-            textEl.textContent = current.substring(0, charIndex - 1);
-            charIndex--;
-            if (charIndex === 0) {
-                deleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-            }
-        }
-        
-        setTimeout(type, deleting ? 60 : 120);
-    }
-    
-    type();
-}
+<section id="skills" class="section skills section-reveal"><div class="section-label">02 / SKILLS</div><div class="section-title-row"><h2>My <span>arsenal.</span></h2><p>What I'm practicing, using and turning into repeatable skill.</p></div><div class="skill-matrix">
+<article><div class="skill-head"><i class="fa-solid fa-crosshairs"></i><h3>Offensive Security</h3></div><div class="skill-bar"><span style="--w:78%"></span></div><div class="skill-tags"><b>Enumeration</b><b>Initial Access</b><b>Post Exploitation</b><b>Reporting</b></div></article>
+<article><div class="skill-head"><i class="fa-brands fa-windows"></i><h3>Windows / AD</h3></div><div class="skill-bar"><span style="--w:74%"></span></div><div class="skill-tags"><b>AD</b><b>BloodHound</b><b>Impacket</b><b>PrivEsc</b></div></article>
+<article><div class="skill-head"><i class="fa-brands fa-linux"></i><h3>Linux</h3></div><div class="skill-bar"><span style="--w:70%"></span></div><div class="skill-tags"><b>Enumeration</b><b>Shells</b><b>PrivEsc</b><b>Bash</b></div></article>
+<article><div class="skill-head"><i class="fa-solid fa-globe"></i><h3>Web Security</h3></div><div class="skill-bar"><span style="--w:58%"></span></div><div class="skill-tags"><b>Burp</b><b>SQLi</b><b>LFI/RFI</b><b>IDOR</b></div></article>
+<article><div class="skill-head"><i class="fa-brands fa-python"></i><h3>Programming</h3></div><div class="skill-bar"><span style="--w:52%"></span></div><div class="skill-tags"><b>Python</b><b>C</b><b>C++</b><b>Automation</b></div></article>
+<article><div class="skill-head"><i class="fa-solid fa-network-wired"></i><h3>Pivoting / Tunneling</h3></div><div class="skill-bar"><span style="--w:64%"></span></div><div class="skill-tags"><b>SSH</b><b>Proxychains</b><b>Tunnels</b><b>Routing</b></div></article>
+</div></section>
 
-// SIMPLE TERMINAL THAT WILL WORK
-function setupSimpleTerminal() {
-    const input = document.getElementById('terminal-cmd');
-    if (!input) {
-        console.error('Input field not found!');
-        return;
-    }
-    
-    console.log('Input field found:', input);
-    
-    // Focus input
-    input.focus();
-    
-    // Add Enter key listener
-    input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            const cmd = this.value.trim();
-            console.log('Command entered:', cmd);
-            
-            if (cmd) {
-                // Show command
-                addCommandLine(cmd);
-                
-                // Process command
-                processSimpleCommand(cmd);
-                
-                // Clear input
-                this.value = '';
-            }
-        }
-    });
-}
+<section id="projects" class="section projects section-reveal"><div class="section-label">03 / PROJECTS</div><div class="section-title-row"><h2>Things I <span>actually built.</span></h2><p>Projects get added as they become real. No filler cards.</p></div><div class="project-grid">
+<article class="project featured"><div class="project-image"><img src="assets/Images/project1.png" alt="MWG project"><span>01</span></div><div class="project-body"><div class="tags"><b>PYTHON</b><b>SECURITY TOOLING</b></div><h3>MWG — Master Wordlist Generator</h3><p>A practical Python project for generating and working with custom wordlists. Built to understand how security tooling is designed instead of only consuming it.</p><a href="https://github.com/WhitexHunter047/MWG-Master-wordlist-generator" target="_blank" rel="noopener">GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div></article>
+<article class="project"><div class="project-image"><img src="assets/Images/project2.png" alt="Security project"><span>02</span></div><div class="project-body"><div class="tags"><b>LAB</b><b>OFFENSIVE SECURITY</b></div><h3>Security Lab / Automation</h3><p>A growing collection of scripts, experiments and lab tooling around enumeration, exploitation and repeatable pentesting workflows.</p><a href="https://github.com/WhitexHunter047" target="_blank" rel="noopener">Explore GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div></article>
+</div></section>
 
-// Add command line to output
-function addCommandLine(cmd) {
-    const output = document.getElementById('terminal-output');
-    if (!output) return;
-    
-    const line = document.createElement('div');
-    line.style.color = 'white';
-    line.style.fontFamily = "'Fira Code', monospace";
-    line.style.margin = '5px 0';
-    line.innerHTML = `<span style="color: #27c93f;">guest@portfolio:~$</span> ${cmd}`;
-    output.appendChild(line);
-    
-    // Scroll to bottom
-    output.scrollTop = output.scrollHeight;
-}
 
-// Add output to terminal
-function addOutput(text, isError = false) {
-    const output = document.getElementById('terminal-output');
-    if (!output) return;
-    
-    const div = document.createElement('div');
-    div.style.color = isError ? '#ff4444' : '#ccc';
-    div.style.fontFamily = "'Poppins', sans-serif";
-    div.style.margin = '10px 0';
-    div.style.padding = '10px 15px';
-    div.style.background = 'rgba(0,0,0,0.3)';
-    div.style.borderLeft = '3px solid ' + (isError ? '#ff4444' : '#27c93f');
-    div.style.borderRadius = '0 5px 5px 0';
-    div.innerHTML = text;
-    output.appendChild(div);
-    
-    // Scroll to bottom
-    output.scrollTop = output.scrollHeight;
-}
 
-// Process commands
-function processSimpleCommand(cmd) {
-    const lowerCmd = cmd.toLowerCase();
-    
-    // Define commands
-    const commands = {
-        'help': `
-            <strong>Available Commands:</strong><br><br>
-            <span style="color: #27c93f">help</span> - Show this help<br>
-            <span style="color: #27c93f">whoami</span> - About me<br>
-            <span style="color: #27c93f">about</span> - Go to About section<br>
-            <span style="color: #27c93f">skills</span> - Go to Skills<br>
-            <span style="color: #27c93f">projects</span> - Go to Projects<br>
-            <span style="color: #27c93f">certs</span> - Go to Certifications<br>
-            <span style="color: #27c93f">contact</span> - Go to Contact<br>
-            <span style="color: #27c93f">clear</span> - Clear terminal<br>
-            <span style="color: #27c93f">hack</span> - Easter egg
-        `,
-        
-        'whoami': {
-            text: 'Anas "White Hunter" - Cybersecurity Expert<br><br><em>Taking you to About section...</em>',
-            scroll: 'about'
-        },
-        
-        'about': {
-            text: '<em>Opening About section...</em>',
-            scroll: 'about'
-        },
-        
-        'skills': {
-            text: '<em>Opening Skills section...</em>',
-            scroll: 'skills'
-        },
-        
-        'projects': {
-            text: '<em>Opening Projects section...</em>',
-            scroll: 'projects'
-        },
-        
-        'certs': {
-            text: '<em>Opening Certifications...</em>',
-            scroll: 'certifications'
-        },
-        
-        'contact': {
-            text: '<em>Opening Contact section...</em>',
-            scroll: 'contact'
-        },
-        
-        'clear': 'clear',
-        
-        'hack': `
-            <pre style="color: #27c93f; font-size: 12px; margin: 0;">
-╔══════════════════════════╗
-║   SYSTEM PENETRATED!    ║
-║   Access: Granted       ║
-║   User: White Hunter    ║
-╚══════════════════════════╝
-            </pre>
-        `
-    };
-    
-    // Handle clear command
-    if (lowerCmd === 'clear') {
-        const output = document.getElementById('terminal-output');
-        if (output) {
-            output.innerHTML = '<div class="command-line"><span class="prompt">root@whitehunter:~$</span><span id="intro-text"></span><span class="cursor">█</span></div>';
-            startTyping();
-        }
-        return;
-    }
-    
-    // Handle known commands
-    if (commands[lowerCmd]) {
-        if (lowerCmd === 'help') {
-            addOutput(commands[lowerCmd]);
-        } else if (lowerCmd === 'hack') {
-            addOutput(commands[lowerCmd]);
-        } else {
-            // For scroll commands
-            const cmdData = commands[lowerCmd];
-            addOutput(cmdData.text);
-            
-            // Scroll to section
-            setTimeout(() => {
-                const section = document.getElementById(cmdData.scroll);
-                if (section) {
-                    section.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 800);
-        }
-    } else {
-        // Command not found
-        addOutput(`<span style="color: #ff4444">Command not found:</span> "${cmd}"<br>Type <span style="color: #27c93f">help</span> for commands.`, true);
-    }
-}
+<section id="certifications" class="section certifications section-reveal"><div class="section-label">05 / CERTIFICATIONS</div><div class="cert-layout"><div><h2>Preparing for<br><span>the next proof.</span></h2><p>I'm not listing certifications I haven't earned. CPTS is the current target, with OSCP as a longer-term goal once the underlying practical foundation is strong enough.</p></div><div class="cert-stack"><article class="cert preparing"><div class="cert-icon"><i class="fa-solid fa-crosshairs"></i></div><div><span class="cert-status">PREPARING</span><h3>HTB Certified CPTS</h3><p>Currently preparing through the HTB Academy Penetration Tester path, focusing on methodology, enumeration, Active Directory, pivoting, web security and reporting.</p><div class="progress"><span></span></div><small>CPTS // preparation in progress</small></div></article><article class="cert longterm"><div class="cert-icon"><i class="fa-solid fa-shield-halved"></i></div><div><span class="cert-status muted-status">LONG-TERM GOAL</span><h3>OffSec OSCP</h3><p>A future certification target after building enough hands-on depth and completing the CPTS stage first. No claim of certification — just the next benchmark.</p><small>OSCP // future target</small></div></article></div></div></section>
 
-// Make functions available globally for testing
-window.testTerminal = function() {
-    console.log('Testing terminal...');
-    const input = document.getElementById('terminal-cmd');
-    if (input) {
-        input.value = 'help';
-        input.dispatchEvent(new KeyboardEvent('keydown', {key: 'Enter'}));
-    }
-};
-</script>
+<section id="contact" class="section contact section-reveal">
+<div class="contact-intro">
+<div class="section-label">06 / CONTACT</div>
+<h2>Let's build<br><span>something real.</span></h2>
+<p class="contact-note">OPEN TO CYBERSECURITY ROLES / FREELANCE / COLLABORATION</p>
+<div class="contact-quick">
+<a class="quick-item" href="mailto:anas.ouargui@example.com">
+<span class="quick-icon"><i class="fa-solid fa-envelope"></i></span>
+<span><small>EMAIL</small><b>anas.ouargui@example.com</b></span>
+</a>
+<button class="quick-item copy-btn" type="button" data-copy="anas.ouargui@example.com">
+<span class="quick-icon"><i class="fa-regular fa-copy"></i></span>
+<span><small>QUICK ACTION</small><b>Copy email</b></span>
+</button>
+</div>
+</div>
 
- <!-- About Section -->
-<section id="about">
-  <h2>About Me</h2>
-  <div class="about-container">
-    <img src="assets/Images/profile.jpeg" alt="Your Name" class="profile-img">
-    <div class="about-text">
-      <p>I'm a cybersecurity expert and programmer with a passion for building secure systems and solving complex problems. With over 5 years of experience, I specialize in penetration testing, ethical hacking, and secure software development.</p>
-      <div class="skills-container">
-        <div class="skills-track">
-          <div class="skill-btn">
-            <i class="fab fa-python"></i>
-            <span>Python</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fab fa-js"></i>
-            <span>JavaScript</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-shield-alt"></i>
-            <span>Penetration Testing</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-user-secret"></i>
-            <span>Ethical Hacking</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-cloud"></i>
-            <span>Cloud Security</span>
-          </div>
-          <!-- Repeat the skills for seamless sliding -->
-          <div class="skill-btn">
-            <i class="fab fa-python"></i>
-            <span>Python</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fab fa-js"></i>
-            <span>JavaScript</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-shield-alt"></i>
-            <span>Penetration Testing</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-user-secret"></i>
-            <span>Ethical Hacking</span>
-          </div>
-          <div class="skill-btn">
-            <i class="fas fa-cloud"></i>
-            <span>Cloud Security</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="contact-card">
+<div class="contact-primary">
+<a href="mailto:anas.ouargui@example.com" class="contact-item primary-item">
+<span class="contact-icon"><i class="fa-solid fa-envelope"></i></span>
+<span class="contact-meta"><small>PRIMARY</small><b>Email</b><em>anas.ouargui@example.com</em></span>
+<i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+</a>
+<a href="https://github.com/WhitexHunter047" target="_blank" rel="noopener" class="contact-item primary-item">
+<span class="contact-icon"><i class="fa-brands fa-github"></i></span>
+<span class="contact-meta"><small>CODE / PROJECTS</small><b>GitHub</b><em>github.com/WhitexHunter047</em></span>
+<i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+</a>
+<a href="https://app.hackthebox.com/users/2208371" target="_blank" rel="noopener" class="contact-item primary-item">
+<span class="contact-icon"><i class="fa-solid fa-cube"></i></span>
+<span class="contact-meta"><small>HACK THE BOX</small><b>HTB Profile</b><em>app.hackthebox.com/users/2208371</em></span>
+<i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+</a>
+<a href="https://tryhackme.com/p/WhitexHunter" target="_blank" rel="noopener" class="contact-item primary-item">
+<span class="contact-icon"><i class="fa-solid fa-user-secret"></i></span>
+<span class="contact-meta"><small>TRYHACKME</small><b>THM Profile</b><em>tryhackme.com/p/WhitexHunter</em></span>
+<i class="fa-solid fa-arrow-up-right-from-square contact-arrow"></i>
+</a>
+<a href="assets/cv.pdf" download class="contact-item primary-item">
+<span class="contact-icon"><i class="fa-solid fa-file-arrow-down"></i></span>
+<span class="contact-meta"><small>DOWNLOAD</small><b>Curriculum Vitae</b><em>cv.pdf</em></span>
+<i class="fa-solid fa-download contact-arrow"></i>
+</a>
+</div>
+</div>
 </section>
- <!-- Add this after the About section -->
-<section id="skills" class="section">
-    <h2 class="section-title">Skills</h2>
-    <div class="skills-grid">
-        <div class="skill-category">
-            <h3><i class="fas fa-code"></i> Programming</h3>
-            <p>Python, JavaScript, C++, Bash</p>
-        </div>
-        <div class="skill-category">
-            <h3><i class="fas fa-shield-alt"></i> Security</h3>
-            <p>Penetration Testing, Ethical Hacking, Network Security</p>
-        </div>
-        <div class="skill-category">
-            <h3><i class="fas fa-cloud"></i> Cloud & DevOps</h3>
-            <p>AWS, Docker, Kubernetes, CI/CD</p>
-        </div>
-    </div>
-</section>
-  <!-- Projects Section -->
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="project-grid">
-      <div class="project-card">
-        <img src="assets/Images/project1.png" alt="Project 1">
-        <h3>Secure Chat Application</h3>
-        <p>A fully encrypted chat app built with end-to-end encryption.</p>
-        <a href="https://github.com/WhitexHunter047/MWG-Master-wordlist-generator" class="project-link">View on GitHub</a>
-      </div>
-      <div class="project-card">
-        <img src="assets/Images/project2.png" alt="Project 2">
-        <h3>Network Vulnerability Scanner</h3>
-        <p>A tool to detect vulnerabilities in network systems.</p>
-        <a href="#" class="project-link">View on GitHub</a>
-      </div>
-    </div>
-  </section>
-<!-- Certifications Section -->
-<section id="certifications">
-  <h2>Certifications</h2>
-  <div class="certifications-grid">
-    <!-- CEH -->
-    <div class="certification-card">
-      <i class="fas fa-user-secret"></i>
-      <h3>Certified Ethical Hacker (CEH)</h3>
-      <p>Issued by EC-Council</p>
-    </div>
-    <!-- Security+ -->
-    <div class="certification-card">
-      <i class="fas fa-shield-alt"></i>
-      <h3>CompTIA Security+</h3>
-      <p>Issued by CompTIA</p>
-    </div>
-    <!-- OSCP Knowledge -->
-    <div class="certification-card">
-      <i class="fas fa-bug"></i>
-      <h3>OSCP Knowledge</h3>
-      <p>Offensive Security</p>
-    </div>
-    <!-- eJPTv1 -->
-    <div class="certification-card">
-      <i class="fas fa-search"></i>
-      <h3>eJPTv1</h3>
-      <p>Issued by eLearnSecurity</p>
-    </div>
-    <!-- CySA+ -->
-    <div class="certification-card">
-      <i class="fas fa-chart-line"></i>
-      <h3>CySA+</h3>
-      <p>Issued by CompTIA</p>
-    </div>
-  </div>
-</section>
+</main>
 
-<!-- Footer -->
-<footer>
-    <p>&copy; 2025 Anas Ouargui. All rights reserved.</p>
-    <div class="social-links">
-      <a href="mailto:ouarguianas@example.com" target="_blank" title="Email">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="https://github.com/WhitexHunter47" target="_blank" title="GitHub">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://linkedin.com/in/yourusername" target="_blank" title="LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://twitter.com/yourusername" target="_blank" title="Twitter">
-        <i class="fab fa-twitter"></i>
-      </a>
-    </div>
-  </footer>
+<footer><span>WHITE HUNTER // ANAS OUARGUI</span><span>CURIOUS ENOUGH TO BREAK IT. DISCIPLINED ENOUGH TO UNDERSTAND IT.</span></footer>
 <script src="scripts.js"></script>
-</body>
-
-</html>
-
+</body></html>
