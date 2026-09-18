@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 // target not found</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  body{overflow:hidden}
+  .notfound{position:relative;z-index:2;min-height:100vh;display:grid;place-items:center;padding:40px;text-align:center}
+  .nf-inner{max-width:720px}
+  .nf-code{
+    font:700 clamp(110px,22vw,260px)/1 var(--mono);
+    color:var(--green);
+    letter-spacing:-.06em;
+    text-shadow:0 0 40px rgba(184,255,92,.35);
+    position:relative;
+  }
+  .nf-code::before,.nf-code::after{
+    content:attr(data-text);
+    position:absolute;inset:0;
+    color:#48e68b;
+    opacity:.35;
+  }
+  .nf-code::before{transform:translate(-3px,1px);clip-path:inset(0 0 55% 0)}
+  .nf-code::after{transform:translate(3px,-1px);clip-path:inset(45% 0 0 0)}
+  .nf-terminal{
+    margin:24px auto 0;
+    max-width:560px;text-align:left;
+    border:1px solid var(--line);
+    background:rgba(9,13,10,.75);
+    padding:18px 20px;
+    font:12px var(--mono);
+    color:#9aa79e;
+  }
+  .nf-terminal .line{margin:6px 0}
+  .nf-terminal .cmd{color:var(--green)}
+  .nf-terminal .err{color:#ff5c5c}
+  .nf-terminal .cur{display:inline-block;width:8px;height:14px;background:var(--green);vertical-align:middle;animation:blink 1s steps(2) infinite}
+  .nf-actions{display:flex;gap:12px;justify-content:center;margin-top:28px;flex-wrap:wrap}
+  @keyframes blink{50%{opacity:0}}
+</style>
+</head>
+<body>
+<canvas id="matrixCanvas" aria-hidden="true"></canvas>
+<div class="matrix-shade"></div><div class="vignette"></div><canvas id="gridCanvas" class="grid-bg" aria-hidden="true"></canvas>
+
+<main class="notfound">
+  <div class="nf-inner">
+    <div class="nf-code" data-text="404">404</div>
+    <div class="nf-terminal">
+      <div class="line"><span class="cmd">$</span> curl -I https://white-hunter.dev/this-page</div>
+      <div class="line err">HTTP/1.1 404 Not Found</div>
+      <div class="line"><span class="cmd">$</span> nmap -p- target</div>
+      <div class="line">Host seems down. Path does not exist. <span class="cur"></span></div>
+    </div>
+    <div class="nf-actions">
+      <a class="btn primary" href="index.html"><i class="fa-solid fa-house"></i> Back home</a>
+      <a class="btn secondary" href="index.html#projects">View projects</a>
+      <a class="btn secondary" href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</main>
+
+<script>
+/* Mini matrix + reactive grid, same vibe as main site, self-contained */
+(() => {
+  const c = document.getElementById('matrixCanvas'), x = c.getContext('2d');
+  let w,h,cols,drops;
+  const chars='01ABCDEFGHIJKLMNOPQRSTUVWXYZ$+-*/=%#&';
+  function resize(){
+    const dpr=Math.min(devicePixelRatio||1,2); w=innerWidth; h=innerHeight;
+    c.width=w*dpr; c.height=h*dpr; c.style.width=w+'px'; c.style.height=h+'px';
+    x.setTransform(dpr,0,0,dpr,0,0); cols=Math.ceil(w/14); drops=Array.from({length:cols},()=>Math.random()*-h/14);
+  }
+  function frame(){
+    x.fillStyle='rgba(6,8,6,.05)'; x.fillRect(0,0,w,h);
+    x.font='12px "Fira Code",monospace';
+    for(let i=0;i<cols;i++){
+      const px=i*14, py=drops[i]*14;
+      x.fillStyle = Math.random()>.92 ? 'rgba(184,255,92,.8)' : 'rgba(72,230,139,.28)';
+      x.fillText(chars[(Math.random()*chars.length)|0], px, py);
+      drops[i]++;
+      if(py>h+30 && Math.random()>.97) drops[i]=Math.random()*-35;
+    }
+    requestAnimationFrame(frame);
+  }
+  resize(); addEventListener('resize', resize); frame();
+
+  // reactive grid
+  const g = document.getElementById('gridCanvas'), gx = g.getContext('2d');
+  let gw,gh,gm={x:-9999,y:-9999};
+  const G=54, INF=180;
+  function rG(){
+    const dpr=Math.min(devicePixelRatio||1,2);
+    gw=innerWidth; gh=innerHeight;
+    g.width=gw*dpr; g.height=gh*dpr; g.style.width=gw+'px'; g.style.height=gh+'px';
+    gx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function dG(){
+    gx.clearRect(0,0,gw,gh);
+    for(let px=0;px<=gw;px+=G){
+      gx.beginPath();
+      for(let py=0;py<=gh;py+=G/2){
+        const dx=px-gm.x, dy=py-gm.y, d=Math.hypot(dx,dy);
+        const f=Math.max(0,1-d/INF), push=f*f*22;
+        const nx=px+(dx/(d||1))*push;
+        if(py===0)gx.moveTo(nx,py); else gx.lineTo(nx,py);
+      }
+      const gf=Math.max(0,1-Math.abs(px-gm.x)/INF);
+      gx.strokeStyle=`rgba(184,255,92,${0.025+gf*0.14})`; gx.stroke();
+    }
+    for(let py=0;py<=gh;py+=G){
+      gx.beginPath();
+      for(let px=0;px<=gw;px+=G/2){
+        const dx=px-gm.x, dy=py-gm.y, d=Math.hypot(dx,dy);
+        const f=Math.max(0,1-d/INF), push=f*f*22;
+        const ny=py+(dy/(d||1))*push;
+        if(px===0)gx.moveTo(px,ny); else gx.lineTo(px,ny);
+      }
+      const gf=Math.max(0,1-Math.abs(py-gm.y)/INF);
+      gx.strokeStyle=`rgba(184,255,92,${0.025+gf*0.14})`; gx.stroke();
+    }
+    requestAnimationFrame(dG);
+  }
+  rG(); addEventListener('resize', rG);
+  addEventListener('pointermove', e=>{gm.x=e.clientX; gm.y=e.clientY}, {passive:true});
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) dG();
+})();
+</script>
+</body>
+</html>
